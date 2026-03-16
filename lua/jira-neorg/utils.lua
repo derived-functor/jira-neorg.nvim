@@ -131,10 +131,7 @@ function M.create_issue_in_current_workspace(lines, issue_id)
     end
     local directory = workspace_path .. "/" .. issue_id
     local file_ = directory .. "/issue.norg"
-    print("Dir: " .. directory)
-    print("File: " .. file_)
-
-    vim.loop.fs_mkdir(directory, tonumber("755", 8))
+    vim.fn.mkdir(directory, "p")
     vim.fn.writefile(lines, file_)
 
     return file_
