@@ -15,7 +15,7 @@ Neovim plugin for fetching JIRA issues into [nvim-neorg/neorg](https://github.co
 
 ```lua
 {
-  "yourusername/jira-neorg.nvim",
+  "derived-functor/jira-neorg.nvim",
   dependencies = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg" },
 }
 ```
@@ -24,7 +24,7 @@ Neovim plugin for fetching JIRA issues into [nvim-neorg/neorg](https://github.co
 
 ```lua
 use {
-  "yourusername/jira-neorg.nvim",
+  "derived-functor/jira-neorg.nvim",
   requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg" },
 }
 ```
