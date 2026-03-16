@@ -1,6 +1,6 @@
 # `jira-neorg.nvim`
 
-Neovim plugin for fetching JIRA issues into nvim-neorg/neorg files.
+Neovim plugin for fetching JIRA issues into [nvim-neorg/neorg](https://github.com/nvim-neorg/neorg) files.
 
 ## Features
 
