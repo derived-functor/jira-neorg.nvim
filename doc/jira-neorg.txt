@@ -1,0 +1,65 @@
+*jira-neorg.txt*                     Fetch JIRA issues to Neorg files
+
+Author:  Boyarov Danil
+
+==============================================================================
+1. INTRODUCTION                                         *jira-neorg*
+
+jira-neorg.nvim is a Neovim plugin that fetches JIRA issues and creates
+Neorg documents from them.
+
+Requirements:
+- nvim-lua/plenary.nvim
+- nvim-neorg/neorg
+
+==============================================================================
+2. SETUP                                                 *jira-neorg-setup*
+
+Call `setup()` in your init.lua or init.vim: >
+
+    require("jira-neorg").setup({
+        base_url = "https://yourdomain.atlassian.net",
+        token = "your_api_token"  -- or set JIRA_API_TOKEN env var
+    })
+`
+
+Configuration options:
+- `base_url` (string): Your JIRA instance URL (default: "https://yourdomain.jira.com")
+- `token` (string): JIRA API token (default: from JIRA_API_TOKEN env var)
+
+Note: Do not include trailing slash in base_url.
+
+==============================================================================
+3. COMMANDS                                             *jira-neorg-commands*
+
+:JiraToNeorg                                                        *:JiraToNeorg*
+    Opens an input prompt for JIRA issue ID, then fetches the issue
+    and creates a Neorg file in the current workspace.
+
+    The issue will be created as:
+    - Directory: `{workspace}/{issue_id}/`
+    - File: `{workspace}/{issue_id}/issue.norg`
+
+    Warning: Existing files will be overwritten.
+
+==============================================================================
+4. EXAMPLE                                              *jira-neorg-example*
+
+>
+    " In init.vim
+    lua require("jira-neorg").setup({
+        \   base_url = "https://mycompany.atlassian.net",
+        \   token = os.getenv("JIRA_API_TOKEN")
+        \ })
+    
+    " Map a key
+    nnoremap <Leader>ji :JiraToNeorg<CR>
+<
+
+==============================================================================
+5. ISSUES                                               *jira-neorg-issues*
+
+If you encounter bugs, please open an issue at:
+https://github.com/yourusername/jira-neorg.nvim
+
+==============================================================================

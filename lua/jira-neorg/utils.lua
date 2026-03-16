@@ -56,8 +56,8 @@ function M.build_issue(data)
     local summary         = fields.summary
     local status          = fields.status.name
     local issue_type      = fields.issuetype.name
-    local assignee        = fields.assignee.displayName
-    local creator         = fields.creator.displayName
+    local assignee        = fields.assignee and fields.assignee.displayName or "Unassigned"
+    local creator         = fields.creator and fields.creator.displayName or "Unknown"
     local description_raw = fields.description
 
     local description = M.clean_text(M.html_to_text(description_raw))
@@ -75,14 +75,25 @@ function M.build_issue(data)
 end
 
 function M.get_workspace_path()
-    local ok, neorg = pcall(require, "neorg.core")
+    local ok, neorg = pcall(require, "neorg")
     if not ok then
         vim.notify("Neorg not found! Ensure it is installed", vim.log.levels.ERROR)
-        return
+        return nil
     end
-    local workspace = neorg.modules.get_module("core.dirman")
 
-    return workspace.get_current_workspace()[2]
+    local dirman = neorg.modules.get_module("core.dirman")
+    if not dirman then
+        vim.notify("Neorg dirman module not loaded", vim.log.levels.ERROR)
+        return nil
+    end
+
+    local current = dirman.get_current_workspace()
+    if not current then
+        vim.notify("No workspace currently open", vim.log.levels.ERROR)
+        return nil
+    end
+
+    return current[2]
 end
 
 function M.build_lines(issue)
@@ -114,7 +125,10 @@ function M.build_lines(issue)
 end
 
 function M.create_issue_in_current_workspace(lines, issue_id)
-    local workspace_path = get_workspace_path()
+    local workspace_path = M.get_workspace_path()
+    if not workspace_path then
+        return nil, "Failed to get workspace path"
+    end
     local directory = workspace_path .. "/" .. issue_id
     local file_ = directory .. "/issue.norg"
     print("Dir: " .. directory)

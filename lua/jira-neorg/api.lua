@@ -12,19 +12,19 @@ function M.get_issue(issue_id, token, base_url, callback)
         , timeout = 5000
         , callback = function(res)
             vim.schedule(function()
-                if not res or not res.status then
+                if not res then
                     callback(nil, "No response from server")
                     return
                 end
 
                 if res.status == 401 then
-                    callback(nil, "Unathorized: check your credentials")
+                    callback(nil, "Unauthorized: check your credentials")
                     return
                 elseif res.status == 404 then
                     callback(nil, "Issue not found: " .. issue_id)
                     return
                 elseif res.status ~= 200 then
-                    callback(nil, "HTTP error: " .. res.status)
+                    callback(nil, "HTTP error: " .. (res.status or "unknown"))
                     return
                 end
 
