@@ -32,7 +32,6 @@ function M.run()
             return
         end
 
-        print("DATA: " .. tostring(data))
         local ok, issue = pcall(utils.build_issue, data)
         if not ok then
             vim.notify("Error building issue" .. tostring(issue), vim.log.levels.ERROR)
