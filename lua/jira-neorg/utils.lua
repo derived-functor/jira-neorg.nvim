@@ -129,7 +129,7 @@ function M.create_issue_in_current_workspace(lines, issue_id)
     if not workspace_path then
         return nil, "Failed to get workspace path"
     end
-    local directory = workspace_path .. "/" .. issue_id
+    local directory = workspace_path .. "/jira/" .. issue_id
     local file_ = directory .. "/issue.norg"
     vim.fn.mkdir(directory, "p")
     vim.fn.writefile(lines, file_)

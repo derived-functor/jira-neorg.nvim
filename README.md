@@ -66,7 +66,7 @@ When prompted, enter an issue ID (e.g., `PROJECT-123`).
 The plugin will:
 
 1. Fetch the issue from JIRA
-2. Create a directory `{issue-id}/` in your current Neorg workspace
+2. Create a directory `jira/{issue-id}/` in your current Neorg workspace
 3. Write the issue data to `issue.norg`
 
 ### Important Notes
@@ -81,8 +81,10 @@ Fetching `TEST-123` creates:
 
 ```
 workspace/
-└── TEST-123/
-    └── issue.norg
+|
+└── jira/
+    └── TEST-123/
+        └── issue.norg
 ```
 
 With content:
