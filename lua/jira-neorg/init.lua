@@ -32,6 +32,14 @@ function M.run()
             return
         end
 
+        local ok, link = pcall(utils.build_issue_link, base_url, issue_id)
+        if not ok then
+            vim.notify("Error building link " .. tostring(link), vim.log.levels.ERROR)
+            return
+        end
+
+        data["issue_link"] = link
+
         local ok, issue = pcall(utils.build_issue, data)
         if not ok then
             vim.notify("Error building issue" .. tostring(issue), vim.log.levels.ERROR)

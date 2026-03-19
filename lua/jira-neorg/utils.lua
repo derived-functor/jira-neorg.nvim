@@ -49,6 +49,12 @@ function M.format_text(text)
     return text
 end
 
+function M.build_issue_link(base_url, issue_id)
+    local link = base_url .. "/browse/" .. issue_id
+
+    return link
+end
+
 function M.build_issue(data)
     local fields = data.fields
 
@@ -59,6 +65,7 @@ function M.build_issue(data)
     local assignee        = fields.assignee and fields.assignee.displayName or "Unassigned"
     local creator         = fields.creator and fields.creator.displayName or "Unknown"
     local description_raw = fields.description
+    local link            = (data.issue_link or "No link")
 
     local description = M.clean_text(M.html_to_text(description_raw))
     description = M.format_text(description)
@@ -71,6 +78,7 @@ function M.build_issue(data)
         [ "assignee" ]        = assignee,
         [ "creator" ]         = creator,
         [ "description" ]     = description,
+        [ "link" ]            = link
     }
 end
 
@@ -107,6 +115,8 @@ function M.build_lines(issue)
         , "updated: " .. os.date("%Y-%m-%d")
         , "version: 1.1.1"
         , "@end"
+        , "* Link"
+        , "  {" .. issue.link .. "}"
         , "* Issue Type"
         , "  " .. issue.issue_type
         , "* Status"
