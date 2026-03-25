@@ -42,6 +42,16 @@ Note: Do not include trailing slash in base_url.
 
     Warning: Existing files will be overwritten.
 
+:JiraToNeorgAll                                                *:JiraToNeorgAll*
+    Fetches all issues assigned to the current user from JIRA
+    and creates Neorg files for each issue in the current workspace.
+
+    For each issue:
+    - Directory: `{workspace}/{issue_id}/`
+    - File: `{workspace}/{issue_id}/issue.norg`
+
+    Warning: Existing files will be overwritten.
+
 ==============================================================================
 4. EXAMPLE                                              *jira-neorg-example*
 

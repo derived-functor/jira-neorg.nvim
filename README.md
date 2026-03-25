@@ -5,6 +5,7 @@ Neovim plugin for fetching JIRA issues into [nvim-neorg/neorg](https://github.co
 ## Features
 
 - Fetch JIRA issues and convert them to Neorg format
+- Fetch all issues assigned to the current user
 - Creates a dedicated directory per issue with `issue.norg` file
 - Automatically extracts issue type, status, assignee, creator, and description
 - Converts HTML descriptions to Neorg-friendly text
@@ -68,6 +69,20 @@ The plugin will:
 1. Fetch the issue from JIRA
 2. Create a directory `jira/{issue-id}/` in your current Neorg workspace
 3. Write the issue data to `issue.norg`
+
+### Fetch all user issues
+
+Fetch all issues assigned to the current user:
+
+```
+:JiraToNeorgAll
+```
+
+The plugin will:
+
+1. Fetch all issues assigned to the current user from JIRA
+2. Create a directory `jira/{issue-id}/` for each issue in your current Neorg workspace
+3. Write each issue data to its respective `issue.norg`
 
 ### Important Notes
 
