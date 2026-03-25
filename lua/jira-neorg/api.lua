@@ -1,5 +1,60 @@
 local M = {}
 
+local function build_headers(token)
+    local headers = {
+          [ "Authorization" ] = "Bearer " .. token
+        , [ "Accept" ] = "application/json"
+    }
+
+    return headers
+end
+
+local function default_checks(res, callback)
+    if not res then
+        callback(nil, "No response from server")
+        return
+    end
+
+    if res.status == 401 then
+        callback(nil, "Unauthorized: check your credentials")
+        return
+    elseif res.status == 404 then
+        callback(nil, "Issue not found")
+        return
+    elseif res.status ~= 200 then
+        callback(nil, "HTTP error: " .. (res.status or "unknown"))
+        return
+    end
+end
+
+function M.get_user_assigned_issues(token, base_url, callback)
+    local curl = require("plenary.curl")
+    local url  = base_url .. "/rest/api/latest/search"
+    local query = {
+        [ "jql" ] = "assignee=currentUser()"
+    }
+    local headers = build_headers(token)
+
+    curl.get(url, {
+          headers = headers
+        , query = query
+        , timeout = 5000
+        , callback = function(res)
+            vim.schedule(function()
+                default_checks(res, callback)
+
+                local ok, data = pcall(vim.fn.json_decode, res.body)
+                if not ok then
+                    callback(nil, "Failed to parse response: " .. tostring(data))
+                    return
+                end
+
+                callback(data, nil)
+            end)
+        end
+    })
+end
+
 function M.get_issue(issue_id, token, base_url, callback)
     local curl = require("plenary.curl")
     local url = base_url .. "/rest/api/latest/issue/" .. issue_id
