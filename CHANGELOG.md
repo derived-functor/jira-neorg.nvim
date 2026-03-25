@@ -10,3 +10,7 @@
 ### Added
 
 - Added `link` segment to file that provides link to jira issue directly
+
+## [0.4.0] - 2026-03-25
+
+- Added `JiraToNeorgAll` command that fetches all the issues that are assigned on current user
